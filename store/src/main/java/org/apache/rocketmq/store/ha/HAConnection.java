@@ -78,6 +78,10 @@ public class HAConnection {
         return socketChannel;
     }
 
+    /**
+
+     *
+     */
     class ReadSocketService extends ServiceThread {
         private static final int READ_MAX_BUFFER_SIZE = 1024 * 1024;
         private final Selector selector;
@@ -190,6 +194,10 @@ public class HAConnection {
         }
     }
 
+    /**
+
+     *
+     */
     class WriteSocketService extends ServiceThread {
         private final Selector selector;
         private final SocketChannel socketChannel;
@@ -325,6 +333,9 @@ public class HAConnection {
             HAConnection.log.info(this.getServiceName() + " service end");
         }
 
+        /**
+
+         */
         private boolean transferData() throws Exception {
             int writeSizeZeroTimes = 0;
             // Write Header

@@ -19,10 +19,8 @@ package org.apache.rocketmq.tools.command;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
@@ -104,7 +102,7 @@ public class MQAdminStartup {
                                 ServerUtil.printCommandLineHelp("mqadmin " + cmd.commandName(), options);
                             }
                         } else {
-                            System.out.printf("The sub command %s not exist.%n", args[1]);
+                            System.out.printf("The sub command \'" + args[1] + "\' not exist.%n");
                         }
                         break;
                     }
@@ -119,6 +117,7 @@ public class MQAdminStartup {
                             ServerUtil.parseCmdLine("mqadmin " + cmd.commandName(), subargs, cmd.buildCommandlineOptions(options),
                                 new PosixParser());
                         if (null == commandLine) {
+                            System.exit(-1);
                             return;
                         }
 
@@ -129,7 +128,7 @@ public class MQAdminStartup {
 
                         cmd.execute(commandLine, options, rpcHook);
                     } else {
-                        System.out.printf("The sub command %s not exist.%n", args[0]);
+                        System.out.printf("The sub command \'" + args[0] + "\' not exist.%n");
                     }
                     break;
             }

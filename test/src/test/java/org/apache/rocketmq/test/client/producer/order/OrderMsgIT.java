@@ -49,7 +49,7 @@ public class OrderMsgIT extends BaseConf {
 
     @After
     public void tearDown() {
-        shutdown();
+        shutDown();
     }
 
     @Test

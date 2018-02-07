@@ -67,11 +67,8 @@ public class RemotingServerTest {
     }
 
     public static RemotingClient createRemotingClient() {
-        return createRemotingClient(new NettyClientConfig());
-    }
-
-    public static RemotingClient createRemotingClient(NettyClientConfig nettyClientConfig) {
-        RemotingClient client = new NettyRemotingClient(nettyClientConfig);
+        NettyClientConfig config = new NettyClientConfig();
+        RemotingClient client = new NettyRemotingClient(config);
         client.start();
         return client;
     }

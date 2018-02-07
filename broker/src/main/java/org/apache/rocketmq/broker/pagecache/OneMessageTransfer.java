@@ -27,9 +27,7 @@ public class OneMessageTransfer extends AbstractReferenceCounted implements File
     private final ByteBuffer byteBufferHeader;
     private final SelectMappedBufferResult selectMappedBufferResult;
 
-    /**
-     * Bytes which were transferred already.
-     */
+    /** Bytes which were transferred already. */
     private long transferred;
 
     public OneMessageTransfer(ByteBuffer byteBufferHeader, SelectMappedBufferResult selectMappedBufferResult) {

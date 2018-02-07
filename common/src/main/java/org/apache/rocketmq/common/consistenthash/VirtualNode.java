@@ -16,6 +16,7 @@
  */
 package org.apache.rocketmq.common.consistenthash;
 
+
 public class VirtualNode<T extends Node> implements Node {
     final T physicalNode;
     final int replicaIndex;

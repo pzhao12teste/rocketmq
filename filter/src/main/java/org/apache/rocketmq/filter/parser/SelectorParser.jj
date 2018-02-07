@@ -82,6 +82,7 @@ public class SelectorParser {
 //                convertStringExpressions = true;
 //                sql = sql.substring(CONVERT_STRING_EXPRESSIONS_PREFIX.length());
 //            }
+//
 //            if( convertStringExpressions ) {
 //                ComparisonExpression.CONVERT_STRING_EXPRESSIONS.set(true);
 //            }

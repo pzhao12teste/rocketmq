@@ -32,8 +32,7 @@ public class SendResult {
     public SendResult() {
     }
 
-    public SendResult(SendStatus sendStatus, String msgId, String offsetMsgId, MessageQueue messageQueue,
-        long queueOffset) {
+    public SendResult(SendStatus sendStatus, String msgId, String offsetMsgId, MessageQueue messageQueue, long queueOffset) {
         this.sendStatus = sendStatus;
         this.msgId = msgId;
         this.offsetMsgId = offsetMsgId;
@@ -41,8 +40,7 @@ public class SendResult {
         this.queueOffset = queueOffset;
     }
 
-    public SendResult(final SendStatus sendStatus, final String msgId, final MessageQueue messageQueue,
-        final long queueOffset, final String transactionId,
+    public SendResult(final SendStatus sendStatus, final String msgId, final MessageQueue messageQueue, final long queueOffset, final String transactionId,
         final String offsetMsgId, final String regionId) {
         this.sendStatus = sendStatus;
         this.msgId = msgId;

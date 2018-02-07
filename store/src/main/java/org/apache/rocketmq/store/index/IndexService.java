@@ -35,9 +35,7 @@ import org.slf4j.LoggerFactory;
 
 public class IndexService {
     private static final Logger log = LoggerFactory.getLogger(LoggerName.STORE_LOGGER_NAME);
-    /**
-     * Maximum times to attempt index file creation.
-     */
+    /** Maximum times to attempt index file creation. */
     private static final int MAX_TRY_IDX_CREATE = 3;
     private final DefaultMessageStore defaultMessageStore;
     private final int hashSlotNum;
@@ -142,7 +140,7 @@ public class IndexService {
 
     public void destroy() {
         try {
-            this.readWriteLock.writeLock().lock();
+            this.readWriteLock.readLock().lock();
             for (IndexFile f : this.indexFileList) {
                 f.destroy(1000 * 3);
             }
@@ -150,7 +148,7 @@ public class IndexService {
         } catch (Exception e) {
             log.error("destroy exception", e);
         } finally {
-            this.readWriteLock.writeLock().unlock();
+            this.readWriteLock.readLock().unlock();
         }
     }
 

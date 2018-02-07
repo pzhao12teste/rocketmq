@@ -22,6 +22,7 @@ package org.apache.rocketmq.common.protocol.heartbeat;
 
 /**
  * Message model
+ *
  */
 public enum MessageModel {
     /**

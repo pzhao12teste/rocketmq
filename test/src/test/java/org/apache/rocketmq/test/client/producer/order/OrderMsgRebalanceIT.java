@@ -48,7 +48,7 @@ public class OrderMsgRebalanceIT extends BaseConf {
 
     @After
     public void tearDown() {
-        super.shutdown();
+        super.shutDown();
     }
 
     @Test

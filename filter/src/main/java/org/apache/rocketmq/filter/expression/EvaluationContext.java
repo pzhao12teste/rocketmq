@@ -28,11 +28,16 @@ public interface EvaluationContext {
 
     /**
      * Get value by name from context
+     *
+     * @param name
+     * @return
      */
     Object get(String name);
 
     /**
      * Context variables.
+     *
+     * @return
      */
     Map<String, Object> keyValues();
 }

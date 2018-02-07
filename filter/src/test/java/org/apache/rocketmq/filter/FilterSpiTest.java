@@ -48,6 +48,7 @@ public class FilterSpiTest {
         }
     }
 
+
     @Test
     public void testRegister() {
         FilterFactory.INSTANCE.register(new NothingFilter());

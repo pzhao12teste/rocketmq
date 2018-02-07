@@ -29,6 +29,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class AllocateMessageQueueConsitentHashTest {
 
     private String topic;
@@ -38,6 +39,8 @@ public class AllocateMessageQueueConsitentHashTest {
     public void init() {
         topic = "topic_test";
     }
+
+
 
     public void printMessageQueue(List<MessageQueue> messageQueueList, String name) {
         if (messageQueueList == null || messageQueueList.size() < 1)
@@ -82,26 +85,27 @@ public class AllocateMessageQueueConsitentHashTest {
 
     @Test
     public void testAllocate1() {
-        testAllocate(20, 10);
+        testAllocate(20,10);
     }
 
     @Test
     public void testAllocate2() {
-        testAllocate(10, 20);
+        testAllocate(10,20);
     }
 
+
     @Test
-    public void testRun100RandomCase() {
-        for (int i = 0; i < 10; i++) {
-            int consumerSize = new Random().nextInt(20) + 1;//1-20
-            int queueSize = new Random().nextInt(20) + 1;//1-20
-            testAllocate(queueSize, consumerSize);
+    public void testRun100RandomCase(){
+        for(int i=0;i<100;i++){
+            int consumerSize = new Random().nextInt(200)+1;//1-200
+            int queueSize = new Random().nextInt(100)+1;//1-100
+            testAllocate(queueSize,consumerSize);
             try {
                 Thread.sleep(1);
-            } catch (InterruptedException e) {
-            }
+            } catch (InterruptedException e) {}
         }
     }
+
 
     public void testAllocate(int queueSize, int consumerSize) {
         AllocateMessageQueueStrategy allocateMessageQueueConsistentHash = new AllocateMessageQueueConsistentHash(3);
@@ -129,7 +133,7 @@ public class AllocateMessageQueueConsitentHashTest {
             }
 
             Assert.assertTrue(
-                verifyAllocateAll(cidBegin, mqAll, allocatedResAll));
+                verifyAllocateAll(cidBegin,mqAll, allocatedResAll));
         }
 
         Map<MessageQueue, String> allocateToAllAfterRemoveOne = new TreeMap<MessageQueue, String>();
@@ -158,7 +162,7 @@ public class AllocateMessageQueueConsitentHashTest {
                 //System.out.println("rs[" + cid + "]:" + "[" + rs.size() + "]" + rs.toString());
             }
 
-            Assert.assertTrue("queueSize" + queueSize + "consumerSize:" + consumerSize + "\nmqAll:" + mqAll + "\nallocatedResAllAfterRemove" + allocatedResAllAfterRemove,
+            Assert.assertTrue("queueSize"+queueSize+"consumerSize:"+consumerSize+"\nmqAll:"+mqAll+"\nallocatedResAllAfterRemove"+allocatedResAllAfterRemove,
                 verifyAllocateAll(cidAfterRemoveOne, mqAll, allocatedResAllAfterRemove));
             verifyAfterRemove(allocateToAllOrigin, allocateToAllAfterRemoveOne, removeCID);
         }
@@ -166,7 +170,7 @@ public class AllocateMessageQueueConsitentHashTest {
         List<String> cidAfterAdd = new ArrayList<String>(cidAfterRemoveOne);
         //test allocate add one more cid
         {
-            String newCid = CID_PREFIX + "NEW";
+            String newCid = CID_PREFIX+"NEW";
             //System.out.println("add one more cid "+newCid);
             cidAfterAdd.add(newCid);
             List<MessageQueue> mqShouldOnlyChanged = new ArrayList<MessageQueue>();
@@ -178,7 +182,7 @@ public class AllocateMessageQueueConsitentHashTest {
                 allocatedResAllAfterAdd.addAll(rs);
                 for (MessageQueue mq : rs) {
                     allocateToAll3.put(mq, cid);
-                    if (cid.equals(newCid)) {
+                    if (cid.equals(newCid)){
                         mqShouldOnlyChanged.add(mq);
                     }
                 }
@@ -186,21 +190,19 @@ public class AllocateMessageQueueConsitentHashTest {
             }
 
             Assert.assertTrue(
-                verifyAllocateAll(cidAfterAdd, mqAll, allocatedResAllAfterAdd));
+                verifyAllocateAll(cidAfterAdd,mqAll, allocatedResAllAfterAdd));
             verifyAfterAdd(allocateToAllAfterRemoveOne, allocateToAll3, newCid);
         }
     }
 
-    private boolean verifyAllocateAll(List<String> cidAll, List<MessageQueue> mqAll,
-        List<MessageQueue> allocatedResAll) {
-        if (cidAll.isEmpty()) {
+    private boolean verifyAllocateAll(List<String> cidAll,List<MessageQueue> mqAll, List<MessageQueue> allocatedResAll) {
+        if (cidAll.isEmpty()){
             return allocatedResAll.isEmpty();
         }
         return mqAll.containsAll(allocatedResAll) && allocatedResAll.containsAll(mqAll);
     }
 
-    private void verifyAfterRemove(Map<MessageQueue, String> allocateToBefore, Map<MessageQueue, String> allocateAfter,
-        String removeCID) {
+    private void verifyAfterRemove(Map<MessageQueue, String> allocateToBefore, Map<MessageQueue, String> allocateAfter, String removeCID) {
         for (MessageQueue mq : allocateToBefore.keySet()) {
             String allocateToOrigin = allocateToBefore.get(mq);
             if (allocateToOrigin.equals(removeCID)) {
@@ -211,15 +213,14 @@ public class AllocateMessageQueueConsitentHashTest {
         }
     }
 
-    private void verifyAfterAdd(Map<MessageQueue, String> allocateBefore, Map<MessageQueue, String> allocateAfter,
-        String newCID) {
+    private void verifyAfterAdd(Map<MessageQueue, String> allocateBefore, Map<MessageQueue, String> allocateAfter, String newCID) {
         for (MessageQueue mq : allocateAfter.keySet()) {
             String allocateToOrigin = allocateBefore.get(mq);
             String allocateToAfter = allocateAfter.get(mq);
             if (allocateToAfter.equals(newCID)) {
 
             } else {//the rest queue should be the same
-                Assert.assertTrue("it was allocated to " + allocateToOrigin + ". Now, it is to " + allocateAfter.get(mq) + " mq:" + mq, allocateAfter.get(mq).equals(allocateToOrigin));//should be the same
+                Assert.assertTrue("it was allocated to "+allocateToOrigin+". Now, it is to "+allocateAfter.get(mq)+" mq:"+mq,allocateAfter.get(mq).equals(allocateToOrigin));//should be the same
             }
         }
     }

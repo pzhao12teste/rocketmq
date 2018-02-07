@@ -65,6 +65,7 @@ public class Configuration {
     /**
      * register config object
      *
+     * @param configObject
      * @return the current Configuration object
      */
     public Configuration registerConfig(Object configObject) {
@@ -90,6 +91,7 @@ public class Configuration {
     /**
      * register config properties
      *
+     * @param extProperties
      * @return the current Configuration object
      */
     public Configuration registerConfig(Properties extProperties) {
@@ -115,6 +117,8 @@ public class Configuration {
     /**
      * The store path will be gotten from the field of object.
      *
+     * @param object
+     * @param fieldName
      * @throws java.lang.RuntimeException if the field of object is not exist.
      */
     public void setStorePathFromConfig(Object object, String fieldName) {

@@ -42,6 +42,7 @@ public class BloomFilter {
      *
      * @param f error rate
      * @param n num will mapping to bit
+     * @return
      */
     public static BloomFilter createByFn(int f, int n) {
         return new BloomFilter(f, n);
@@ -86,6 +87,9 @@ public class BloomFilter {
      * See "Less Hashing, Same Performance: Building a Better Bloom Filter" by Adam Kirsch and Michael
      * Mitzenmacher.
      * </p>
+     *
+     * @param str
+     * @return
      */
     public int[] calcBitPositions(String str) {
         int[] bitPositions = new int[this.k];
@@ -109,6 +113,9 @@ public class BloomFilter {
 
     /**
      * Calculate bit positions of {@code str} to construct {@code BloomFilterData}
+     *
+     * @param str
+     * @return
      */
     public BloomFilterData generate(String str) {
         int[] bitPositions = calcBitPositions(str);
@@ -118,6 +125,9 @@ public class BloomFilter {
 
     /**
      * Calculate bit positions of {@code str}, then set the related {@code bits} positions to 1.
+     *
+     * @param str
+     * @param bits
      */
     public void hashTo(String str, BitsArray bits) {
         hashTo(calcBitPositions(str), bits);
@@ -125,6 +135,9 @@ public class BloomFilter {
 
     /**
      * Set the related {@code bits} positions to 1.
+     *
+     * @param bitPositions
+     * @param bits
      */
     public void hashTo(int[] bitPositions, BitsArray bits) {
         check(bits);
@@ -140,6 +153,9 @@ public class BloomFilter {
      * <p>
      * Then set the related {@code bits} positions to 1.
      * </p>
+     *
+     * @param filterData
+     * @param bits
      */
     public void hashTo(BloomFilterData filterData, BitsArray bits) {
         if (!isValid(filterData)) {
@@ -154,6 +170,8 @@ public class BloomFilter {
     /**
      * Calculate bit positions of {@code str}, then check all the related {@code bits} positions is 1.
      *
+     * @param str
+     * @param bits
      * @return true: all the related {@code bits} positions is 1
      */
     public boolean isHit(String str, BitsArray bits) {
@@ -163,6 +181,8 @@ public class BloomFilter {
     /**
      * Check all the related {@code bits} positions is 1.
      *
+     * @param bitPositions
+     * @param bits
      * @return true: all the related {@code bits} positions is 1
      */
     public boolean isHit(int[] bitPositions, BitsArray bits) {
@@ -177,6 +197,8 @@ public class BloomFilter {
     /**
      * Check all the related {@code bits} positions is 1.
      *
+     * @param filterData
+     * @param bits
      * @return true: all the related {@code bits} positions is 1
      */
     public boolean isHit(BloomFilterData filterData, BitsArray bits) {
@@ -192,6 +214,8 @@ public class BloomFilter {
     /**
      * Check whether one of {@code bitPositions} has been occupied.
      *
+     * @param bitPositions
+     * @param bits
      * @return true: if all positions have been occupied.
      */
     public boolean checkFalseHit(int[] bitPositions, BitsArray bits) {
@@ -222,6 +246,9 @@ public class BloomFilter {
      * <li>2. {@link org.apache.rocketmq.filter.util.BloomFilterData#getBitNum} must be equal to {@code m} </li>
      * <li>3. {@link org.apache.rocketmq.filter.util.BloomFilterData#getBitPos} is not null</li>
      * <li>4. {@link org.apache.rocketmq.filter.util.BloomFilterData#getBitPos}'s length is equal to {@code k}</li>
+     *
+     * @param filterData
+     * @return
      */
     public boolean isValid(BloomFilterData filterData) {
         if (filterData == null
@@ -236,6 +263,8 @@ public class BloomFilter {
 
     /**
      * error rate.
+     *
+     * @return
      */
     public int getF() {
         return f;
@@ -243,6 +272,8 @@ public class BloomFilter {
 
     /**
      * expect mapping num.
+     *
+     * @return
      */
     public int getN() {
         return n;
@@ -250,6 +281,8 @@ public class BloomFilter {
 
     /**
      * hash function num.
+     *
+     * @return
      */
     public int getK() {
         return k;
@@ -257,6 +290,8 @@ public class BloomFilter {
 
     /**
      * total bit num.
+     *
+     * @return
      */
     public int getM() {
         return m;

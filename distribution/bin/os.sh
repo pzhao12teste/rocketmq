@@ -59,6 +59,6 @@ cat /sys/block/$DISK/queue/scheduler
 if [ -d ${HOME}/tmpfs ] ; then
     echo "tmpfs exist, do nothing."
 else
-    ln -s /dev/shm ${HOME}/tmpfs
+    ln -s /dev/shm tmpfs
     echo "create tmpfs ok"
 fi

@@ -54,6 +54,9 @@ public class ConsumerFilterData {
 
     /**
      * Check this filter data has been used to calculate bit map when msg was stored in server.
+     *
+     * @param msgStoreTime
+     * @return
      */
     public boolean isMsgInLive(long msgStoreTime) {
         return msgStoreTime > getBornTime();

@@ -162,6 +162,7 @@ public class RequestCode {
      */
     public static final int GET_NAMESRV_CONFIG = 319;
 
+
     public static final int SEND_BATCH_MESSAGE = 320;
 
     public static final int QUERY_CONSUME_QUEUE = 321;

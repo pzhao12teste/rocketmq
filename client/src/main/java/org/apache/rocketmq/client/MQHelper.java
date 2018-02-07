@@ -41,6 +41,7 @@ public class MQHelper {
      * @param consumerGroup consumer group
      * @param topic topic
      * @param timestamp time
+     * @throws Exception
      */
     public static void resetOffsetByTimestamp(
         final MessageModel messageModel,

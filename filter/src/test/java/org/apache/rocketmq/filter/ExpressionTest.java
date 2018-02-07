@@ -47,7 +47,7 @@ public class ExpressionTest {
     private static String stringHasString = "TAGS is not null and TAGS='''''tag'''''";
 
     @Test
-    public void testEvaluate_stringHasString() throws Exception {
+    public void testEvaluate_stringHasString() {
         Expression expr = genExp(stringHasString);
 
         EvaluationContext context = genContext(
@@ -58,7 +58,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_now() throws Exception {
+    public void testEvaluate_now() {
         EvaluationContext context = genContext(
             KeyValue.c("a", System.currentTimeMillis())
         );
@@ -72,8 +72,8 @@ public class ExpressionTest {
         eval(expression, context, Boolean.TRUE);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void testEvaluate_stringCompare() throws Exception {
+    @Test
+    public void testEvaluate_stringCompare() {
         Expression expression = genExp("a between up and low");
 
         EvaluationContext context = genContext(
@@ -147,7 +147,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_exponent() throws Exception {
+    public void testEvaluate_exponent() {
         Expression expression = genExp("a > 3.1E10");
 
         EvaluationContext context = genContext(
@@ -158,7 +158,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_floatNumber() throws Exception {
+    public void testEvaluate_floatNumber() {
         Expression expression = genExp("a > 3.14");
 
         EvaluationContext context = genContext(
@@ -169,7 +169,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_twoVariable() throws Exception {
+    public void testEvaluate_twoVariable() {
         Expression expression = genExp("a > b");
 
         EvaluationContext context = genContext(
@@ -178,12 +178,8 @@ public class ExpressionTest {
         );
 
         eval(expression, context, Boolean.FALSE);
-    }
 
-    @Test
-    public void testEvaluate_twoVariableGt() throws Exception {
-        Expression expression = genExp("a > b");
-        EvaluationContext context = genContext(
+        context = genContext(
             KeyValue.c("b", String.valueOf(10)),
             KeyValue.c("a", String.valueOf(20))
         );
@@ -192,7 +188,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_nullOr() throws Exception {
+    public void testEvaluate_nullOr() {
         Expression expression = genExp(nullOrExpression);
 
         EvaluationContext context = genContext(
@@ -214,7 +210,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_boolean() throws Exception {
+    public void testEvaluate_boolean() {
         Expression expression = genExp(booleanExpression);
 
         EvaluationContext context = genContext(
@@ -233,7 +229,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_equal() throws Exception {
+    public void testEvaluate_equal() {
         Expression expression = genExp(equalExpression);
 
         EvaluationContext context = genContext(
@@ -249,7 +245,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_andTrue() throws Exception {
+    public void testEvaluate_andTrue() {
         Expression expression = genExp(andExpression);
 
         EvaluationContext context = genContext(
@@ -282,7 +278,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_andFalse() throws Exception {
+    public void testEvaluate_andFalse() {
         Expression expression = genExp(andExpression);
 
         EvaluationContext context = genContext(
@@ -306,7 +302,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_orTrue() throws Exception {
+    public void testEvaluate_orTrue() {
         Expression expression = genExp(orExpression);
 
         // first
@@ -341,7 +337,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_orFalse() throws Exception {
+    public void testEvaluate_orFalse() {
         Expression expression = genExp(orExpression);
         // forth
         EvaluationContext context = genContext(
@@ -354,7 +350,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_inTrue() throws Exception {
+    public void testEvaluate_inTrue() {
         Expression expression = genExp(inExpression);
 
         EvaluationContext context = genContext(
@@ -374,7 +370,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_inFalse() throws Exception {
+    public void testEvaluate_inFalse() {
         Expression expression = genExp(inExpression);
 
         EvaluationContext context = genContext(
@@ -384,7 +380,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_notInTrue() throws Exception {
+    public void testEvaluate_notInTrue() {
         Expression expression = genExp(notInExpression);
 
         EvaluationContext context = genContext(
@@ -394,7 +390,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_notInFalse() throws Exception {
+    public void testEvaluate_notInFalse() {
         Expression expression = genExp(notInExpression);
 
         EvaluationContext context = genContext(
@@ -414,7 +410,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_betweenTrue() throws Exception {
+    public void testEvaluate_betweenTrue() {
         Expression expression = genExp(betweenExpression);
 
         EvaluationContext context = genContext(
@@ -434,7 +430,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_betweenFalse() throws Exception {
+    public void testEvaluate_betweenFalse() {
         Expression expression = genExp(betweenExpression);
 
         EvaluationContext context = genContext(
@@ -449,7 +445,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_notBetweenTrue() throws Exception {
+    public void testEvaluate_notBetweenTrue() {
         Expression expression = genExp(notBetweenExpression);
 
         EvaluationContext context = genContext(
@@ -464,7 +460,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_notBetweenFalse() throws Exception {
+    public void testEvaluate_notBetweenFalse() {
         Expression expression = genExp(notBetweenExpression);
 
         EvaluationContext context = genContext(
@@ -484,7 +480,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_isNullTrue() throws Exception {
+    public void testEvaluate_isNullTrue() {
         Expression expression = genExp(isNullExpression);
 
         EvaluationContext context = genContext(
@@ -494,7 +490,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_isNullFalse() throws Exception {
+    public void testEvaluate_isNullFalse() {
         Expression expression = genExp(isNullExpression);
 
         EvaluationContext context = genContext(
@@ -504,7 +500,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_isNotNullTrue() throws Exception {
+    public void testEvaluate_isNotNullTrue() {
         Expression expression = genExp(isNotNullExpression);
 
         EvaluationContext context = genContext(
@@ -514,7 +510,7 @@ public class ExpressionTest {
     }
 
     @Test
-    public void testEvaluate_isNotNullFalse() throws Exception {
+    public void testEvaluate_isNotNullFalse() {
         Expression expression = genExp(isNotNullExpression);
 
         EvaluationContext context = genContext(
@@ -523,8 +519,14 @@ public class ExpressionTest {
         eval(expression, context, Boolean.FALSE);
     }
 
-    protected void eval(Expression expression, EvaluationContext context, Boolean result) throws Exception {
-        Object ret = expression.evaluate(context);
+    protected void eval(Expression expression, EvaluationContext context, Boolean result) {
+        Object ret = null;
+        try {
+            ret = expression.evaluate(context);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
         if (ret == null || !(ret instanceof Boolean)) {
             assertThat(result).isFalse();
         } else {

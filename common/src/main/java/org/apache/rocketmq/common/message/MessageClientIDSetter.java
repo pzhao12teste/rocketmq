@@ -42,7 +42,7 @@ public class MessageClientIDSetter {
             tempBuffer.put(createFakeIP());
         }
         tempBuffer.position(6);
-        tempBuffer.putInt(MessageClientIDSetter.class.getClassLoader().hashCode());
+        tempBuffer.putInt(MessageClientIDSetter.class.getClassLoader().hashCode()); //4
         FIX_STRING = UtilAll.bytes2string(tempBuffer.array());
         setStartTime(System.currentTimeMillis());
         COUNTER = new AtomicInteger(0);
