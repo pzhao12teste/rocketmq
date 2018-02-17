@@ -36,10 +36,6 @@ matrix:
   include:
   - env: CUSTOM_JDK="oraclejdk8"
     os: linux
-  - env: CUSTOM_JDK="oraclejdk7"
-    os: linux
-  - env: CUSTOM_JDK="openjdk7"
-    os: linux
 script:
 - touch /tmp/NOW
 - echo GIBSTUDYSTART $(date)
