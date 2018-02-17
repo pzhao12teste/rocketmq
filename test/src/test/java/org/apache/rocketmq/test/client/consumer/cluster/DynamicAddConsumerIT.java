@@ -23,7 +23,7 @@ import org.apache.rocketmq.test.client.consumer.balance.NormalMsgStaticBalanceIT
 import org.apache.rocketmq.test.client.mq.MQAsyncProducer;
 import org.apache.rocketmq.test.client.rmq.RMQNormalConsumer;
 import org.apache.rocketmq.test.client.rmq.RMQNormalProducer;
-import org.apache.rocketmq.test.listener.rmq.concurrent.RMQNormalListener;
+import org.apache.rocketmq.test.listener.rmq.concurrent.RMQNormalListner;
 import org.apache.rocketmq.test.util.MQWait;
 import org.apache.rocketmq.test.util.TestUtils;
 import org.junit.After;
@@ -46,20 +46,20 @@ public class DynamicAddConsumerIT extends BaseConf {
 
     @After
     public void tearDown() {
-        super.shutdown();
+        super.shutDown();
     }
 
     @Test
     public void testAddOneConsumer() {
         int msgSize = 100;
-        RMQNormalConsumer consumer1 = getConsumer(nsAddr, topic, "*", new RMQNormalListener());
+        RMQNormalConsumer consumer1 = getConsumer(nsAddr, topic, "*", new RMQNormalListner());
 
         MQAsyncProducer asyncDefaultMQProducer = new MQAsyncProducer(producer, msgSize, 100);
         asyncDefaultMQProducer.start();
         TestUtils.waitForSeconds(waitTime);
 
         RMQNormalConsumer consumer2 = getConsumer(nsAddr, consumer1.getConsumerGroup(), topic,
-            "*", new RMQNormalListener());
+            "*", new RMQNormalListner());
 
         asyncDefaultMQProducer.waitSendAll(waitTime * 6);
 
@@ -74,16 +74,16 @@ public class DynamicAddConsumerIT extends BaseConf {
     @Test
     public void testAddTwoConsumer() {
         int msgSize = 100;
-        RMQNormalConsumer consumer1 = getConsumer(nsAddr, topic, "*", new RMQNormalListener());
+        RMQNormalConsumer consumer1 = getConsumer(nsAddr, topic, "*", new RMQNormalListner());
 
         MQAsyncProducer asyncDefaultMQProducer = new MQAsyncProducer(producer, msgSize, 100);
         asyncDefaultMQProducer.start();
         TestUtils.waitForSeconds(waitTime);
 
         RMQNormalConsumer consumer2 = getConsumer(nsAddr, consumer1.getConsumerGroup(), topic,
-            "*", new RMQNormalListener());
+            "*", new RMQNormalListner());
         RMQNormalConsumer consumer3 = getConsumer(nsAddr, consumer1.getConsumerGroup(), topic,
-            "*", new RMQNormalListener());
+            "*", new RMQNormalListner());
 
         asyncDefaultMQProducer.waitSendAll(waitTime * 6);
 

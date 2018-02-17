@@ -17,7 +17,6 @@
 
 package org.apache.rocketmq.broker.filter;
 
-import org.apache.rocketmq.common.UtilAll;
 import org.apache.rocketmq.common.filter.ExpressionType;
 import org.apache.rocketmq.common.filter.FilterAPI;
 import org.apache.rocketmq.common.protocol.heartbeat.SubscriptionData;
@@ -233,7 +232,7 @@ public class ConsumerFilterManagerTest {
             assertThat(filterData.isDead()).isTrue();
             assertThat(filterData.getCompiledExpression()).isNotNull();
         } finally {
-            UtilAll.deleteFile(new File("./unit_test"));
+            deleteDirectory("./unit_test");
         }
     }
 
@@ -270,8 +269,23 @@ public class ConsumerFilterManagerTest {
 
             assertThat(topicData).isNullOrEmpty();
         } finally {
-            UtilAll.deleteFile(new File("./unit_test"));
+            deleteDirectory("./unit_test");
         }
     }
 
+    protected void deleteDirectory(String rootPath) {
+        File file = new File(rootPath);
+        deleteFile(file);
+    }
+
+    protected void deleteFile(File file) {
+        File[] subFiles = file.listFiles();
+        if (subFiles != null) {
+            for (File sub : subFiles) {
+                deleteFile(sub);
+            }
+        }
+
+        file.delete();
+    }
 }

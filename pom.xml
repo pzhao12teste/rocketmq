@@ -27,40 +27,41 @@
     <inceptionYear>2012</inceptionYear>
     <groupId>org.apache.rocketmq</groupId>
     <artifactId>rocketmq-all</artifactId>
-    <version>4.2.0</version>
+    <version>4.2.0-incubating-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Apache RocketMQ ${project.version}</name>
-    <url>http://rocketmq.apache.org/</url>
+    <url>http://rocketmq.incubator.apache.org/</url>
 
     <prerequisites>
         <maven>3.2.5</maven>
     </prerequisites>
 
     <scm>
-        <url>git@github.com:apache/rocketmq.git</url>
-        <connection>scm:git:git@github.com:apache/rocketmq.git</connection>
-        <developerConnection>scm:git:git@github.com:apache/rocketmq.git</developerConnection>
-        <tag>rocketmq-all-4.2.0</tag>
+        <url>https://git-wip-us.apache.org/repos/asf/incubator-rocketmq.git</url>
+        <connection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-rocketmq.git</connection>
+        <developerConnection>scm:git:https://git-wip-us.apache.org/repos/asf/incubator-rocketmq.git
+        </developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <mailingLists>
         <mailingList>
             <name>Development List</name>
-            <subscribe>dev-subscribe@rocketmq.apache.org</subscribe>
-            <unsubscribe>dev-unsubscribe@rocketmq.apache.org</unsubscribe>
-            <post>dev@rocketmq.apache.org</post>
+            <subscribe>dev-subscribe@rocketmq.incubator.apache.org</subscribe>
+            <unsubscribe>dev-unsubscribe@rocketmq.incubator.apache.org</unsubscribe>
+            <post>dev@rocketmq.incubator.apache.org</post>
         </mailingList>
         <mailingList>
             <name>User List</name>
-            <subscribe>users-subscribe@rocketmq.apache.org</subscribe>
-            <unsubscribe>users-unsubscribe@rocketmq.apache.org</unsubscribe>
-            <post>users@rocketmq.apache.org</post>
+            <subscribe>users-subscribe@rocketmq.incubator.apache.org</subscribe>
+            <unsubscribe>users-unsubscribe@rocketmq.incubator.apache.org</unsubscribe>
+            <post>users@rocketmq.incubator.apache.org</post>
         </mailingList>
         <mailingList>
             <name>Commits List</name>
-            <subscribe>commits-subscribe@rocketmq.apache.org</subscribe>
-            <unsubscribe>commits-unsubscribe@rocketmq.apache.org</unsubscribe>
-            <post>commits@rocketmq.apache.org</post>
+            <subscribe>commits-subscribe@rocketmq.incubator.apache.org</subscribe>
+            <unsubscribe>commits-unsubscribe@rocketmq.incubator.apache.org</unsubscribe>
+            <post>commits@rocketmq.incubator.apache.org</post>
         </mailingList>
     </mailingLists>
 
@@ -255,8 +256,6 @@
                         <exclude>.travis.yml</exclude>
                         <exclude>CONTRIBUTING.md</exclude>
                         <exclude>bin/README.md</exclude>
-                        <exclude>.github/*</exclude>
-                        <exclude>src/test/resources/certs/*</exclude>
                     <exclude>**/NOW</exclude>
                         <exclude>**/.travis.yml</exclude>
                         <exclude>**/.ekstazi/**</exclude>
@@ -363,7 +362,7 @@
             <extension>
                 <groupId>edu.illinois</groupId>
                 <artifactId>incremental-builder-with-ekstazi</artifactId>
-                <version>3.5.3</version>
+                <version>3.5.4</version>
             </extension>
         </extensions>
     </build>
@@ -544,7 +543,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.7</version>
+                <version>1.7.5</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
@@ -564,7 +563,7 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
-                <version>4.0.42.Final</version>
+                <version>4.0.36.Final</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -604,11 +603,6 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
-                <version>2.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-slf4j-impl</artifactId>
                 <version>2.7</version>
             </dependency>
         </dependencies>

@@ -47,7 +47,7 @@ public class BatchSendIT extends BaseConf {
 
     @After
     public void tearDown() {
-        super.shutdown();
+        super.shutDown();
     }
 
     @Test
@@ -77,6 +77,7 @@ public class BatchSendIT extends BaseConf {
         }
     }
 
+
     @Test
     public void testBatchSend_CheckProperties() throws Exception {
         List<Message> messageList = new ArrayList<>();
@@ -89,6 +90,7 @@ public class BatchSendIT extends BaseConf {
         message.setFlag(123);
         message.setBody("body".getBytes());
         messageList.add(message);
+
 
         DefaultMQProducer producer = ProducerFactory.getRMQProducer(nsAddr);
         SendResult sendResult = producer.send(messageList);

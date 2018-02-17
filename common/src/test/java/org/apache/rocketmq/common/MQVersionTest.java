@@ -18,7 +18,6 @@
 package org.apache.rocketmq.common;
 
 import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MQVersionTest {
@@ -39,6 +38,7 @@ public class MQVersionTest {
     public void testValue2Version() throws Exception {
         assertThat(MQVersion.value2Version(0)).isEqualTo(MQVersion.Version.V3_0_0_SNAPSHOT);
     }
+
 
     @Test
     public void testValue2Version_HigherVersion() throws Exception {

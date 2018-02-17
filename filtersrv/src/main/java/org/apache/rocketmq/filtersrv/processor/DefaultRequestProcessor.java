@@ -83,8 +83,7 @@ public class DefaultRequestProcessor implements NettyRequestProcessor {
         return false;
     }
 
-    private RemotingCommand registerMessageFilterClass(ChannelHandlerContext ctx,
-        RemotingCommand request) throws RemotingCommandException {
+    private RemotingCommand registerMessageFilterClass(ChannelHandlerContext ctx, RemotingCommand request) throws RemotingCommandException {
         final RemotingCommand response = RemotingCommand.createResponseCommand(null);
         final RegisterMessageFilterClassRequestHeader requestHeader =
             (RegisterMessageFilterClassRequestHeader) request.decodeCommandCustomHeader(RegisterMessageFilterClassRequestHeader.class);
@@ -109,8 +108,7 @@ public class DefaultRequestProcessor implements NettyRequestProcessor {
         return response;
     }
 
-    private RemotingCommand pullMessageForward(final ChannelHandlerContext ctx,
-        final RemotingCommand request) throws Exception {
+    private RemotingCommand pullMessageForward(final ChannelHandlerContext ctx, final RemotingCommand request) throws Exception {
         final RemotingCommand response = RemotingCommand.createResponseCommand(PullMessageResponseHeader.class);
         final PullMessageResponseHeader responseHeader = (PullMessageResponseHeader) response.readCustomHeader();
         final PullMessageRequestHeader requestHeader =
@@ -217,8 +215,7 @@ public class DefaultRequestProcessor implements NettyRequestProcessor {
         return null;
     }
 
-    private void returnResponse(final String group, final String topic, ChannelHandlerContext ctx,
-        final RemotingCommand response,
+    private void returnResponse(final String group, final String topic, ChannelHandlerContext ctx, final RemotingCommand response,
         final List<MessageExt> msgList) {
         if (null != msgList) {
             ByteBuffer[] msgBufferList = new ByteBuffer[msgList.size()];

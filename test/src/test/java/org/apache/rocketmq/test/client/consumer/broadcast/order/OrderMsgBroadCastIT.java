@@ -38,8 +38,6 @@ public class OrderMsgBroadCastIT extends BaseBroadCastIT {
     private RMQNormalProducer producer = null;
     private String topic = null;
 
-    private int broadcastConsumeTime = 1 * 60 * 1000;
-
     @Before
     public void setUp() {
         topic = initTopic();
@@ -49,7 +47,7 @@ public class OrderMsgBroadCastIT extends BaseBroadCastIT {
 
     @After
     public void tearDown() {
-        super.shutdown();
+        super.shutDown();
     }
 
     @Test
@@ -65,8 +63,9 @@ public class OrderMsgBroadCastIT extends BaseBroadCastIT {
         List<MessageQueue> mqs = producer.getMessageQueue();
         MessageQueueMsg mqMsgs = new MessageQueueMsg(mqs, msgSize);
         producer.send(mqMsgs.getMsgsWithMQ());
-        consumer1.getListener().waitForMessageConsume(producer.getAllMsgBody(), broadcastConsumeTime);
-        consumer2.getListener().waitForMessageConsume(producer.getAllMsgBody(), broadcastConsumeTime);
+
+        consumer1.getListener().waitForMessageConsume(producer.getAllMsgBody(), consumeTime);
+        consumer2.getListener().waitForMessageConsume(producer.getAllMsgBody(), consumeTime);
 
         assertThat(VerifyUtils.verifyOrder(((RMQOrderListener) consumer1.getListener()).getMsgs()))
             .isEqualTo(true);

@@ -143,6 +143,7 @@ public class MessageStoreConfig {
     private int transientStorePoolSize = 5;
     private boolean fastFailIfNoBufferInStorePool = false;
 
+
     public boolean isDebugLockEnable() {
         return debugLockEnable;
     }
@@ -604,8 +605,7 @@ public class MessageStoreConfig {
     }
 
     /**
-     * Enable transient commitLog store poll only if transientStorePoolEnable is true and the FlushDiskType is
-     * ASYNC_FLUSH
+     * Enable transient commitLog store poll only if transientStorePoolEnable is true and the FlushDiskType is ASYNC_FLUSH
      *
      * @return <tt>true</tt> or <tt>false</tt>
      */

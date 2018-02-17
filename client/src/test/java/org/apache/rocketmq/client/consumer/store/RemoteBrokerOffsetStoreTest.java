@@ -99,8 +99,7 @@ public class RemoteBrokerOffsetStoreTest {
         final MessageQueue messageQueue = new MessageQueue(topic, brokerName, 3);
 
         doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock mock) throws Throwable {
+            @Override public Object answer(InvocationOnMock mock) throws Throwable {
                 UpdateConsumerOffsetRequestHeader updateRequestHeader = mock.getArgument(1);
                 when(mqClientAPI.queryConsumerOffset(anyString(), any(QueryConsumerOffsetRequestHeader.class), anyLong())).thenReturn(updateRequestHeader.getCommitOffset());
                 return null;
@@ -123,6 +122,8 @@ public class RemoteBrokerOffsetStoreTest {
         offsetStore.persistAll(new HashSet<MessageQueue>(Collections.singletonList(messageQueue)));
         assertThat(offsetStore.readOffset(messageQueue, ReadOffsetType.READ_FROM_STORE)).isEqualTo(1025);
     }
+
+
 
     @Test
     public void testRemoveOffset() throws Exception {

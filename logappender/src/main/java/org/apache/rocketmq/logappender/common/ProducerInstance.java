@@ -16,7 +16,6 @@
  */
 package org.apache.rocketmq.logappender.common;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.MQProducer;
@@ -40,25 +39,20 @@ public class ProducerInstance {
 
     public static final String DEFAULT_GROUP = "rocketmq_appender";
 
-    private ConcurrentHashMap<String, MQProducer> producerMap = new ConcurrentHashMap<String, MQProducer>();
+    private static ConcurrentHashMap<String, MQProducer> producerMap = new ConcurrentHashMap<String, MQProducer>();
 
-    private static ProducerInstance instance = new ProducerInstance();
-
-    public static ProducerInstance getProducerInstance() {
-        return instance;
-    }
-
-    private String genKey(String nameServerAddress, String group) {
+    private static String genKey(String nameServerAddress, String group) {
         return nameServerAddress + "_" + group;
     }
 
-    public MQProducer getInstance(String nameServerAddress, String group) throws MQClientException {
-        if (StringUtils.isBlank(group)) {
+
+    public static MQProducer getInstance(String nameServerAddress, String group) throws MQClientException {
+        if (group == null) {
             group = DEFAULT_GROUP;
         }
 
         String genKey = genKey(nameServerAddress, group);
-        MQProducer p = getProducerInstance().producerMap.get(genKey);
+        MQProducer p = producerMap.get(genKey);
         if (p != null) {
             return p;
         }
@@ -66,7 +60,8 @@ public class ProducerInstance {
         DefaultMQProducer defaultMQProducer = new DefaultMQProducer(group);
         defaultMQProducer.setNamesrvAddr(nameServerAddress);
         MQProducer beforeProducer = null;
-        beforeProducer = getProducerInstance().producerMap.putIfAbsent(genKey, defaultMQProducer);
+        //cas put producer
+        beforeProducer = producerMap.putIfAbsent(genKey, defaultMQProducer);
         if (beforeProducer != null) {
             return beforeProducer;
         }
@@ -74,22 +69,23 @@ public class ProducerInstance {
         return defaultMQProducer;
     }
 
-    public void removeAndClose(String nameServerAddress, String group) {
+
+    public static void removeAndClose(String nameServerAddress, String group) {
         if (group == null) {
             group = DEFAULT_GROUP;
         }
         String genKey = genKey(nameServerAddress, group);
-        MQProducer producer = getProducerInstance().producerMap.remove(genKey);
+        MQProducer producer = producerMap.remove(genKey);
 
         if (producer != null) {
             producer.shutdown();
         }
     }
 
-    public void closeAll() {
-        Set<Map.Entry<String, MQProducer>> entries = getProducerInstance().producerMap.entrySet();
+    public static void closeAll() {
+        Set<Map.Entry<String, MQProducer>> entries = producerMap.entrySet();
         for (Map.Entry<String, MQProducer> entry : entries) {
-            getProducerInstance().producerMap.remove(entry.getKey());
+            producerMap.remove(entry.getKey());
             entry.getValue().shutdown();
         }
     }

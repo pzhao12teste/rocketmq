@@ -51,6 +51,7 @@ public class CommitLogDispatcherCalcBitMapTest {
         ConsumerFilterData nullBloomData = filterManager.get("topic0", "CID_1");
         nullBloomData.setBloomFilterData(null);
 
+
         CommitLogDispatcherCalcBitMap calcBitMap = new CommitLogDispatcherCalcBitMap(brokerConfig,
             filterManager);
 

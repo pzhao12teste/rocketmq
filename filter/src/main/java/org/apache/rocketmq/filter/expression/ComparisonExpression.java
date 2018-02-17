@@ -203,6 +203,8 @@ public abstract class ComparisonExpression extends BinaryExpression implements B
 
     /**
      * Only Numeric expressions can be used in >, >=, < or <= expressions.s
+     *
+     * @param expr
      */
     public static void checkLessThanOperand(Expression expr) {
         if (expr instanceof ConstantExpression) {
@@ -222,6 +224,8 @@ public abstract class ComparisonExpression extends BinaryExpression implements B
     /**
      * Validates that the expression can be used in == or <> expression. Cannot
      * not be NULL TRUE or FALSE litterals.
+     *
+     * @param expr
      */
     public static void checkEqualOperand(Expression expr) {
         if (expr instanceof ConstantExpression) {

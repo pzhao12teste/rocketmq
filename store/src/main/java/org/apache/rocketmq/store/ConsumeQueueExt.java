@@ -58,17 +58,17 @@ public class ConsumeQueueExt {
     /**
      * Constructor.
      *
-     * @param topic topic
-     * @param queueId id of queue
-     * @param storePath root dir of files to store.
+     * @param topic          topic
+     * @param queueId        id of queue
+     * @param storePath      root dir of files to store.
      * @param mappedFileSize file size
-     * @param bitMapLength bit map length.
+     * @param bitMapLength   bit map length.
      */
     public ConsumeQueueExt(final String topic,
-        final int queueId,
-        final String storePath,
-        final int mappedFileSize,
-        final int bitMapLength) {
+                           final int queueId,
+                           final String storePath,
+                           final int mappedFileSize,
+                           final int bitMapLength) {
 
         this.storePath = storePath;
         this.mappedFileSize = mappedFileSize;
@@ -94,8 +94,11 @@ public class ConsumeQueueExt {
      * <p>
      * Just test {@code address} is less than 0.
      * </p>
+     *
+     * @param address
+     * @return
      */
-    public static boolean isExtAddr(final long address) {
+    public boolean isExtAddr(final long address) {
         return address <= MAX_ADDR;
     }
 
@@ -105,6 +108,9 @@ public class ConsumeQueueExt {
      * if {@code address} is less than 0, return {@code address} - {@link java.lang.Long#MIN_VALUE};
      * else, just return {@code address}
      * </p>
+     *
+     * @param address
+     * @return
      */
     public long unDecorate(final long address) {
         if (isExtAddr(address)) {
@@ -120,6 +126,7 @@ public class ConsumeQueueExt {
      * else, just return {@code offset}
      * </p>
      *
+     * @param offset
      * @return ext address(value is less than 0)
      */
     public long decorate(final long offset) {
@@ -133,6 +140,7 @@ public class ConsumeQueueExt {
      * Get data from buffer.
      *
      * @param address less than 0
+     * @return
      */
     public CqExtUnit get(final long address) {
         CqExtUnit cqExtUnit = new CqExtUnit();
@@ -146,7 +154,9 @@ public class ConsumeQueueExt {
     /**
      * Get data from buffer, and set to {@code cqExtUnit}
      *
-     * @param address less than 0
+     * @param address   less than 0
+     * @param cqExtUnit
+     * @return
      */
     public boolean get(final long address, final CqExtUnit cqExtUnit) {
         if (!isExtAddr(address)) {
@@ -184,6 +194,7 @@ public class ConsumeQueueExt {
      * Be careful, this method is not thread safe.
      * </p>
      *
+     * @param cqExtUnit
      * @return success: < 0: fail: >=0
      */
     public long put(final CqExtUnit cqExtUnit) {
@@ -248,6 +259,8 @@ public class ConsumeQueueExt {
 
     /**
      * Load data from file when startup.
+     *
+     * @return
      */
     public boolean load() {
         boolean result = this.mappedFileQueue.load();
@@ -366,6 +379,9 @@ public class ConsumeQueueExt {
 
     /**
      * flush buffer to file.
+     *
+     * @param flushLeastPages
+     * @return
      */
     public boolean flush(final int flushLeastPages) {
         return this.mappedFileQueue.flush(flushLeastPages);
@@ -384,6 +400,8 @@ public class ConsumeQueueExt {
      * <p>
      * Be careful: it's an address just when invoking this method.
      * </p>
+     *
+     * @return
      */
     public long getMaxAddress() {
         MappedFile mappedFile = this.mappedFileQueue.getLastMappedFile();
@@ -395,6 +413,8 @@ public class ConsumeQueueExt {
 
     /**
      * Minus address saved in file.
+     *
+     * @return
      */
     public long getMinAddress() {
         MappedFile firstFile = this.mappedFileQueue.getFirstMappedFile();
@@ -415,8 +435,7 @@ public class ConsumeQueueExt {
 
         public static final int MAX_EXT_UNIT_SIZE = Short.MAX_VALUE;
 
-        public CqExtUnit() {
-        }
+        public CqExtUnit() {}
 
         public CqExtUnit(Long tagsCode, long msgStoreTime, byte[] filterBitMap) {
             this.tagsCode = tagsCode == null ? 0 : tagsCode;
@@ -449,6 +468,9 @@ public class ConsumeQueueExt {
 
         /**
          * build unit from buffer from current position.
+         *
+         * @param buffer
+         * @return
          */
         private boolean read(final ByteBuffer buffer) {
             if (buffer.position() + 2 > buffer.limit()) {
@@ -485,6 +507,8 @@ public class ConsumeQueueExt {
          * <p>
          * if size <= 0, nothing to do.
          * </p>
+         *
+         * @param buffer
          */
         private void readBySkip(final ByteBuffer buffer) {
             ByteBuffer temp = buffer.slice();
@@ -503,6 +527,9 @@ public class ConsumeQueueExt {
          * <li>1. @{code container} can be null, it will be created if null.</li>
          * <li>2. if capacity of @{code container} is less than unit size, it will be created also.</li>
          * <li>3. Pls be sure that size of unit is not greater than {@link #MAX_EXT_UNIT_SIZE}</li>
+         *
+         * @param container
+         * @return
          */
         private byte[] write(final ByteBuffer container) {
             this.bitMapSize = (short) (filterBitMap == null ? 0 : filterBitMap.length);
@@ -530,6 +557,8 @@ public class ConsumeQueueExt {
 
         /**
          * Calculate unit size by current data.
+         *
+         * @return
          */
         private int calcUnitSize() {
             int sizeTemp = MIN_EXT_UNIT_SIZE + (filterBitMap == null ? 0 : filterBitMap.length);
@@ -571,23 +600,16 @@ public class ConsumeQueueExt {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o)
-                return true;
-            if (!(o instanceof CqExtUnit))
-                return false;
+            if (this == o) return true;
+            if (!(o instanceof CqExtUnit)) return false;
 
             CqExtUnit cqExtUnit = (CqExtUnit) o;
 
-            if (bitMapSize != cqExtUnit.bitMapSize)
-                return false;
-            if (msgStoreTime != cqExtUnit.msgStoreTime)
-                return false;
-            if (size != cqExtUnit.size)
-                return false;
-            if (tagsCode != cqExtUnit.tagsCode)
-                return false;
-            if (!Arrays.equals(filterBitMap, cqExtUnit.filterBitMap))
-                return false;
+            if (bitMapSize != cqExtUnit.bitMapSize) return false;
+            if (msgStoreTime != cqExtUnit.msgStoreTime) return false;
+            if (size != cqExtUnit.size) return false;
+            if (tagsCode != cqExtUnit.tagsCode) return false;
+            if (!Arrays.equals(filterBitMap, cqExtUnit.filterBitMap)) return false;
 
             return true;
         }

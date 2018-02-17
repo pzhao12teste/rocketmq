@@ -25,7 +25,7 @@ import org.apache.rocketmq.test.client.rmq.RMQNormalConsumer;
 import org.apache.rocketmq.test.client.rmq.RMQNormalProducer;
 import org.apache.rocketmq.test.factory.MQMessageFactory;
 import org.apache.rocketmq.test.factory.TagMessage;
-import org.apache.rocketmq.test.listener.rmq.concurrent.RMQNormalListener;
+import org.apache.rocketmq.test.listener.rmq.concurrent.RMQNormalListner;
 import org.apache.rocketmq.test.util.VerifyUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -49,7 +49,7 @@ public class TagMessageWithMulConsumerIT extends BaseConf {
 
     @After
     public void tearDown() {
-        super.shutdown();
+        super.shutDown();
     }
 
     @Test
@@ -58,9 +58,9 @@ public class TagMessageWithMulConsumerIT extends BaseConf {
         String tag2 = "jueyin2";
         int msgSize = 10;
         RMQNormalConsumer consumerTag1 = getConsumer(nsAddr, topic, tag1,
-            new RMQNormalListener());
+            new RMQNormalListner());
         RMQNormalConsumer consumerTag2 = getConsumer(nsAddr, topic, tag2,
-            new RMQNormalListener());
+            new RMQNormalListner());
 
         List<Object> tag1Msgs = MQMessageFactory.getRMQMessage(tag1, topic, msgSize);
         producer.send(tag1Msgs);
@@ -89,9 +89,9 @@ public class TagMessageWithMulConsumerIT extends BaseConf {
 
         TagMessage tagMessage = new TagMessage(tags, topic, msgSize);
         RMQNormalConsumer consumerTag1 = getConsumer(nsAddr, topic, tags[0],
-            new RMQNormalListener());
+            new RMQNormalListner());
         RMQNormalConsumer consumerTag2 = getConsumer(nsAddr, topic, tags[1],
-            new RMQNormalListener());
+            new RMQNormalListner());
 
         List<Object> tagMsgs = tagMessage.getMixedTagMessages();
         producer.send(tagMsgs);
@@ -120,9 +120,9 @@ public class TagMessageWithMulConsumerIT extends BaseConf {
 
         TagMessage tagMessage = new TagMessage(tags, topic, msgSize);
         RMQNormalConsumer consumerTag1 = getConsumer(nsAddr, topic, sub1,
-            new RMQNormalListener());
+            new RMQNormalListner());
         RMQNormalConsumer consumerTag2 = getConsumer(nsAddr, topic, sub2,
-            new RMQNormalListener());
+            new RMQNormalListner());
 
         List<Object> tagMsgs = tagMessage.getMixedTagMessages();
         producer.send(tagMsgs);
@@ -152,13 +152,13 @@ public class TagMessageWithMulConsumerIT extends BaseConf {
         int msgSize = 10;
 
         RMQNormalConsumer consumerSubTwoMatchAll = getConsumer(nsAddr, topic, sub1,
-            new RMQNormalListener());
+            new RMQNormalListner());
         RMQNormalConsumer consumerSubTwoMachieOne = getConsumer(nsAddr, topic, sub2,
-            new RMQNormalListener());
+            new RMQNormalListner());
         RMQNormalConsumer consumerSubTag1 = getConsumer(nsAddr, topic, sub3,
-            new RMQNormalListener());
+            new RMQNormalListner());
         RMQNormalConsumer consumerSubAll = getConsumer(nsAddr, topic, sub4,
-            new RMQNormalListener());
+            new RMQNormalListner());
 
         producer.send(msgSize);
         Assert.assertEquals("Not all are sent", msgSize, producer.getAllUndupMsgBody().size());

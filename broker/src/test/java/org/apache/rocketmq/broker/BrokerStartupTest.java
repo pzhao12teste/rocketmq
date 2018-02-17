@@ -25,8 +25,6 @@ import org.junit.Test;
 
 public class BrokerStartupTest {
 
-    private String storePathRootDir = ".";
-
     @Test
     public void testProperties2SystemEnv() throws NoSuchMethodException, InvocationTargetException,
         IllegalAccessException {
@@ -38,4 +36,5 @@ public class BrokerStartupTest {
         method.invoke(null, properties);
         Assert.assertEquals("value", System.getProperty("rocketmq.namesrv.domain"));
     }
+
 }

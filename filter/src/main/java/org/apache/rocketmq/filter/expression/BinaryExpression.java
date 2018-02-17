@@ -69,6 +69,8 @@ public abstract class BinaryExpression implements Expression {
     /**
      * Returns the symbol that represents this binary expression.  For example, addition is
      * represented by "+"
+     *
+     * @return
      */
     public abstract String getExpressionSymbol();
 

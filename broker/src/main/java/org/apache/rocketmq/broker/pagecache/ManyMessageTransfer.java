@@ -28,9 +28,7 @@ public class ManyMessageTransfer extends AbstractReferenceCounted implements Fil
     private final ByteBuffer byteBufferHeader;
     private final GetMessageResult getMessageResult;
 
-    /**
-     * Bytes which were transferred already.
-     */
+    /** Bytes which were transferred already. */
     private long transferred;
 
     public ManyMessageTransfer(ByteBuffer byteBufferHeader, GetMessageResult getMessageResult) {

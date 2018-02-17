@@ -17,8 +17,6 @@
 
 package org.apache.rocketmq.store;
 
-import org.apache.rocketmq.common.UtilAll;
-import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -35,6 +33,7 @@ public class ConsumeQueueExtTest {
     private static final int unitSizeWithBitMap = ConsumeQueueExt.CqExtUnit.MIN_EXT_UNIT_SIZE + bitMapLength / Byte.SIZE;
     private static final int cqExtFileSize = 10 * unitSizeWithBitMap;
     private static final int unitCount = 20;
+
 
     protected ConsumeQueueExt genExt() {
         return new ConsumeQueueExt(
@@ -63,8 +62,24 @@ public class ConsumeQueueExtTest {
         return cqExtUnit;
     }
 
+    protected void deleteDirectory(String rootPath) {
+        File file = new File(rootPath);
+        deleteFile(file);
+    }
+
+    protected void deleteFile(File file) {
+        File[] subFiles = file.listFiles();
+        if (subFiles != null) {
+            for (File sub : subFiles) {
+                deleteFile(sub);
+            }
+        }
+
+        file.delete();
+    }
+
     protected void putSth(ConsumeQueueExt consumeQueueExt, boolean getAfterPut,
-        boolean unitSameSize, int unitCount) {
+                          boolean unitSameSize, int unitCount) {
         for (int i = 0; i < unitCount; i++) {
             ConsumeQueueExt.CqExtUnit putUnit =
                 unitSameSize ? genUnit(true) : genUnit(i % 2 == 0);
@@ -96,7 +111,7 @@ public class ConsumeQueueExtTest {
             putSth(consumeQueueExt, true, false, unitCount);
         } finally {
             consumeQueueExt.destroy();
-            UtilAll.deleteFile(new File(storePath));
+            deleteDirectory(storePath);
         }
     }
 
@@ -124,7 +139,7 @@ public class ConsumeQueueExtTest {
             }
         } finally {
             consumeQueueExt.destroy();
-            UtilAll.deleteFile(new File(storePath));
+            deleteDirectory(storePath);
         }
     }
 
@@ -146,7 +161,7 @@ public class ConsumeQueueExtTest {
             assertThat(unit).isNull();
         } finally {
             consumeQueueExt.destroy();
-            UtilAll.deleteFile(new File(storePath));
+            deleteDirectory(storePath);
         }
     }
 
@@ -184,7 +199,7 @@ public class ConsumeQueueExtTest {
         } finally {
             putCqExt.destroy();
             loadCqExt.destroy();
-            UtilAll.deleteFile(new File(storePath));
+            deleteDirectory(storePath);
         }
     }
 
@@ -207,7 +222,7 @@ public class ConsumeQueueExtTest {
             assertThat(expectMinAddress).isEqualTo(minAddress);
         } finally {
             consumeQueueExt.destroy();
-            UtilAll.deleteFile(new File(storePath));
+            deleteDirectory(storePath);
         }
     }
 
@@ -230,12 +245,7 @@ public class ConsumeQueueExtTest {
             assertThat(expectMaxAddress).isEqualTo(maxAddress);
         } finally {
             consumeQueueExt.destroy();
-            UtilAll.deleteFile(new File(storePath));
+            deleteDirectory(storePath);
         }
-    }
-
-    @After
-    public void destroy() {
-        UtilAll.deleteFile(new File(storePath));
     }
 }

@@ -26,7 +26,7 @@ public class TransactionCheckListenerImpl implements TransactionCheckListener {
 
     @Override
     public LocalTransactionState checkLocalTransactionState(MessageExt msg) {
-        System.out.printf("server checking TrMsg %s%n", msg);
+        System.out.printf("server checking TrMsg " + msg.toString() + "%n");
 
         int value = transactionIndex.getAndIncrement();
         if ((value % 6) == 0) {

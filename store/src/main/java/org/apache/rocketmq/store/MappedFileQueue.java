@@ -367,9 +367,6 @@ public class MappedFileQueue {
                     } else {
                         break;
                     }
-                } else {
-                    //avoid deleting files in the middle
-                    break;
                 }
             }
         }
@@ -408,6 +405,7 @@ public class MappedFileQueue {
                     break;
                 }
 
+                // TODO: Externalize this hardcoded value
                 if (destroy && mappedFile.destroy(1000 * 60)) {
                     files.add(mappedFile);
                     deleteCount++;
@@ -424,7 +422,7 @@ public class MappedFileQueue {
 
     public boolean flush(final int flushLeastPages) {
         boolean result = true;
-        MappedFile mappedFile = this.findMappedFileByOffset(this.flushedWhere, this.flushedWhere == 0);
+        MappedFile mappedFile = this.findMappedFileByOffset(this.flushedWhere, false);
         if (mappedFile != null) {
             long tmpTimeStamp = mappedFile.getStoreTimestamp();
             int offset = mappedFile.flush(flushLeastPages);
@@ -441,7 +439,7 @@ public class MappedFileQueue {
 
     public boolean commit(final int commitLeastPages) {
         boolean result = true;
-        MappedFile mappedFile = this.findMappedFileByOffset(this.committedWhere, this.committedWhere == 0);
+        MappedFile mappedFile = this.findMappedFileByOffset(this.committedWhere, false);
         if (mappedFile != null) {
             int offset = mappedFile.commit(commitLeastPages);
             long where = mappedFile.getFileFromOffset() + offset;
